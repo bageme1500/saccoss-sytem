@@ -19,6 +19,8 @@
   "homepage": "https://github.com/bageme1500/saccoss-sytem#readme",
   "description": "",
   "dependencies": {
-    "express": "^5.2.1"
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "sqlite3": "^5.1.7"
   }
 }
