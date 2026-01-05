@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Sidebar({ active, onNav }) {
+export default function Sidebar({ active, onNav, isOpen, onClose }) {
   const navItems = [
     { label: 'Dashboard', key: 'dashboard', icon: '📊' },
     { label: 'Users', key: 'users', icon: '👥' },
@@ -10,12 +10,34 @@ export default function Sidebar({ active, onNav }) {
     { label: 'Payments', key: 'payments', icon: '💳' },
   ];
 
+  const handleNavClick = (key) => {
+    onNav(key);
+    if (onClose) onClose();
+  };
+
   return (
-    <aside className="sidebar">
+    <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
       {/* Brand */}
       <div className="brand">
         <div className="brand-icon">🏦</div>
         <span>Saccos Admin</span>
+        {/* Mobile close button */}
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            style={{
+              marginLeft: 'auto',
+              background: 'transparent',
+              border: 'none',
+              color: 'rgba(255,255,255,0.7)',
+              fontSize: '1.25rem',
+              cursor: 'pointer',
+            }}
+          >
+            ×
+          </button>
+        )}
       </div>
 
       {/* Navigation */}
@@ -24,7 +46,7 @@ export default function Sidebar({ active, onNav }) {
           <button
             key={item.key}
             className={active === item.key ? 'active' : ''}
-            onClick={() => onNav(item.key)}
+            onClick={() => handleNavClick(item.key)}
           >
             <span className="nav-icon">{item.icon}</span>
             <span>{item.label}</span>

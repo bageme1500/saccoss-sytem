@@ -10,6 +10,7 @@ import CreatePayment from './components/CreatePayment'
 
 export default function App() {
   const [view, setView] = useState('dashboard')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const getPageTitle = () => {
     const titles = {
@@ -25,11 +26,27 @@ export default function App() {
 
   return (
     <div className="app-wrap">
-      <Sidebar active={view} onNav={setView} />
+      {/* Sidebar + mobile backdrop */}
+      {sidebarOpen && <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />}
+      <Sidebar
+        active={view}
+        onNav={setView}
+        isOpen={sidebarOpen || window.innerWidth > 768}
+        onClose={() => setSidebarOpen(false)}
+      />
       <main className="main">
         <div className="header">
           <h1>{getPageTitle()}</h1>
-          <div className="header-badge">Admin Panel</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <button
+              type="button"
+              className="secondary header-menu"
+              onClick={() => setSidebarOpen(true)}
+            >
+              ☰ Menu
+            </button>
+            <div className="header-badge">Admin Panel</div>
+          </div>
         </div>
 
         {view === 'dashboard' && <Dashboard />}

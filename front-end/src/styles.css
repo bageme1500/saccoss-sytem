@@ -1,10 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 /* stylelint-disable at-rule-no-unknown */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 /* stylelint-enable at-rule-no-unknown */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
   --primary: #2563eb;
@@ -124,6 +124,14 @@ body {
   justify-content: center;
 }
 
+/* Mobile sidebar backdrop */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  z-index: 900;
+}
+
 /* Main Content */
 .main {
   flex: 1;
@@ -156,6 +164,11 @@ body {
   border-radius: 20px;
   font-size: 0.875rem;
   font-weight: 600;
+}
+
+/* Mobile header menu button */
+.header-menu {
+  display: none;
 }
 
 /* Dashboard Grid */
@@ -428,6 +441,10 @@ button.secondary:hover {
   
   .header h1 {
     font-size: 1.5rem;
+  }
+
+  .header-menu {
+    display: inline-flex;
   }
   
   .grid {
