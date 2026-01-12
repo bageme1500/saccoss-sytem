@@ -16,9 +16,9 @@ async function apiRequest(endpoint, options = {}) {
       ...options.headers,
     },
     ...options,
-  };
+ };
 
-  if (config.body && typeof config.body === 'object') {
+   if (config.body && typeof config.body === 'object') {
     config.body = JSON.stringify(config.body);
   }
 

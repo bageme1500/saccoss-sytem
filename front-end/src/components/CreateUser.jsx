@@ -3,7 +3,7 @@ import { userApi } from '../services/api'
 import { useMutation } from '../hooks/useApi'
 import { handleApiError } from '../utils/errorHandler'
 
-export default function CreateUser(){
+export default function CreateUser() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -15,10 +15,10 @@ export default function CreateUser(){
   const submit = async (e) => {
     e.preventDefault()
     setMsg(null)
-    try{
+    try {
       await createUser({ name, email, password, role_name }, {
         onSuccess: (user) => {
-          setMsg(`Successfully created user "${user.name}" (ID: ${user.id})`)
+          setMsg(`Successfully created user "${user.name}".`)
           setMsgType('success')
           setName('')
           setEmail('')
@@ -30,7 +30,7 @@ export default function CreateUser(){
           setMsgType('error')
         }
       })
-    }catch(err){
+    } catch (err) {
       // Error handled in onError callback
     }
   }
@@ -41,48 +41,48 @@ export default function CreateUser(){
       <form className="form" onSubmit={submit}>
         <div className="form-group">
           <label className="form-label">Full Name</label>
-          <input 
-            value={name} 
-            onChange={e=>setName(e.target.value)} 
-            placeholder="Enter full name" 
+          <input
+            value={name}
+            onChange={e => setName(e.target.value)}
+            placeholder="Enter full name"
             required
           />
         </div>
-        
+
         <div className="form-group">
           <label className="form-label">Email Address</label>
-          <input 
+          <input
             type="email"
-            value={email} 
-            onChange={e=>setEmail(e.target.value)} 
-            placeholder="user@example.com" 
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder="user@example.com"
             required
           />
         </div>
-        
+
         <div className="form-group">
           <label className="form-label">Password</label>
-          <input 
+          <input
             type="password"
-            value={password} 
-            onChange={e=>setPassword(e.target.value)} 
-            placeholder="Enter password" 
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            placeholder="Enter password"
             required
             minLength={6}
           />
         </div>
-        
+
         <div className="form-group">
           <label className="form-label">Role</label>
-          <select 
-            value={role_name} 
-            onChange={e=>setRoleName(e.target.value)}
+          <select
+            value={role_name}
+            onChange={e => setRoleName(e.target.value)}
           >
             <option value="member">Member</option>
             <option value="admin">Admin</option>
           </select>
         </div>
-        
+
         <button className="primary" type="submit" disabled={loading}>
           {loading ? (
             <>
@@ -96,7 +96,7 @@ export default function CreateUser(){
             </>
           )}
         </button>
-        
+
         {msg && (
           <div className={`msg ${msgType}`}>
             {msgType === 'success' ? '✓ ' : '✗ '}

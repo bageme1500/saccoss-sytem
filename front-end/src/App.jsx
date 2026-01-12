@@ -7,6 +7,7 @@ import CreateRole from './components/CreateRole'
 import CreateMembership from './components/CreateMembership'
 import CreateContribution from './components/CreateContribution'
 import CreatePayment from './components/CreatePayment'
+import UpdateUser from './components/UpdateUser'
 
 export default function App() {
   const [view, setView] = useState('dashboard')
@@ -17,6 +18,7 @@ export default function App() {
       dashboard: 'Dashboard',
       users: 'Users Management',
       createUser: 'Create New User',
+      UpdateUser: 'Update User',
       memberships: 'Create Membership',
       contributions: 'Create Contribution',
       payments: 'Record Payment'
@@ -52,6 +54,7 @@ export default function App() {
         {view === 'dashboard' && <Dashboard />}
         {view === 'users' && <UsersList />}
         {view === 'createUser' && <CreateUser />}
+        {view === 'updateUser' && <UpdateUser />}
         {view === 'memberships' && <CreateMembership />}
         {view === 'contributions' && <CreateContribution />}
         {view === 'payments' && <CreatePayment />}

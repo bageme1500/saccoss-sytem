@@ -1,13 +1,39 @@
-import React from 'react';
+import React, { useState } from "react";
 
 export default function Sidebar({ active, onNav, isOpen, onClose }) {
+  const [openMenu, setOpenMenu] = useState(null);
+
   const navItems = [
-    { label: 'Dashboard', key: 'dashboard', icon: '📊' },
-    { label: 'Users', key: 'users', icon: '👥' },
-    { label: 'Create User', key: 'createUser', icon: '➕' },
-    { label: 'Memberships', key: 'memberships', icon: '📋' },
-    { label: 'Contributions', key: 'contributions', icon: '💰' },
-    { label: 'Payments', key: 'payments', icon: '💳' },
+    {
+      label: "Home",
+      key: "home",
+      icon: "🏠",
+    },
+    {
+      label: "Users",
+      key: "users",
+      icon: "👥",
+      children: [
+        { label: "Create User", key: "createUser" },
+        { label: "Update User", key: "updateUser" },
+        { label: "All Users", key: "allUsers" },
+      ],
+    },
+    {
+      label: "Contributions",
+      key: "contributions",
+      icon: "💰",
+      children: [
+        { label: "Monthly Set Amount", key: "monthlyAmount" },
+        { label: "Expected Total Amount", key: "expectedTotal" },
+        { label: "Contributed List", key: "contributedList" },
+      ],
+    },
+    {
+      label: "Payments",
+      key: "payments",
+      icon: "💳",
+    },
   ];
 
   const handleNavClick = (key) => {
@@ -15,55 +41,70 @@ export default function Sidebar({ active, onNav, isOpen, onClose }) {
     if (onClose) onClose();
   };
 
+  const toggleMenu = (key) => {
+    setOpenMenu(openMenu === key ? null : key);
+  };
+
   return (
-    <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
-      {/* Brand */}
-      <div className="brand">
-        <div className="brand-icon">🏦</div>
-        <span>Saccos Admin</span>
-        {/* Mobile close button */}
+    <aside className={`sidebar ${isOpen ? "open" : ""}`}>
+      {/* Header */}
+      <div className="sidebar-header">
+        <div className="brand">
+          <span className="brand-icon">🏦</span>
+          <span className="brand-text">SACCOS Admin</span>
+        </div>
+
         {onClose && (
-          <button
-            type="button"
-            onClick={onClose}
-            style={{
-              marginLeft: 'auto',
-              background: 'transparent',
-              border: 'none',
-              color: 'rgba(255,255,255,0.7)',
-              fontSize: '1.25rem',
-              cursor: 'pointer',
-            }}
-          >
+          <button className="close-btn" onClick={onClose}>
             ×
           </button>
         )}
       </div>
 
       {/* Navigation */}
-      <nav className="nav">
+      <nav className="sidebar-nav">
         {navItems.map((item) => (
-          <button
-            key={item.key}
-            className={active === item.key ? 'active' : ''}
-            onClick={() => handleNavClick(item.key)}
-          >
-            <span className="nav-icon">{item.icon}</span>
-            <span>{item.label}</span>
-          </button>
+          <div key={item.key} className="nav-group">
+            {/* Parent item */}
+            <button
+              className={`nav-item ${active === item.key ? "active" : ""
+                }`}
+              onClick={() =>
+                item.children
+                  ? toggleMenu(item.key)
+                  : handleNavClick(item.key)
+              }
+            >
+              <span className="nav-icon">{item.icon}</span>
+              <span className="nav-label">{item.label}</span>
+              {item.children && (
+                <span className="nav-arrow">
+                  {openMenu === item.key ? "▾" : "▸"}
+                </span>
+              )}
+            </button>
+
+            {/* Child items */}
+            {item.children && openMenu === item.key && (
+              <div className="nav-children">
+                {item.children.map((child) => (
+                  <button
+                    key={child.key}
+                    className={`nav-sub-item ${active === child.key ? "active" : ""
+                      }`}
+                    onClick={() => handleNavClick(child.key)}
+                  >
+                    {child.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         ))}
       </nav>
 
       {/* Footer */}
-      <div style={{
-        padding: '16px 20px',
-        fontSize: '0.75rem',
-        color: 'rgba(255, 255, 255, 0.5)',
-        borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-        marginTop: 'auto'
-      }}>
-        © 2026 SACCOS System
-      </div>
+      <div className="sidebar-footer">© 2026 SACCOS System</div>
     </aside>
   );
 }
